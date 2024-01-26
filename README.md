@@ -1,1 +1,1 @@
-# bogoshipoo ratatatata ❤️😫✨✨
+bogoshipoo ratatatata ❤️😫✨✨
