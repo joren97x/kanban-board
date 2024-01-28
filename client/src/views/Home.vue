@@ -12,7 +12,7 @@
                 <ListCard/>
             </v-col>
             <v-col cols="4">
-                <v-card title="To do" append-icon="mdi-dots-horizontal" color="grey-lighten-1">
+                <v-card title="Doing" append-icon="mdi-dots-horizontal" color="grey-lighten-1">
                     <v-list class="bg-grey-lighten-1">
                         <template v-for="n in 5" :key="n">
                             <v-hover v-slot="{ isHovering, props }">

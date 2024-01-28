@@ -28,7 +28,7 @@
                                 </v-avatar>
                             </v-btn>
                         </template>
-                        <span>Change background color.</span>
+                        <span>Brent Faiyaz (brent@faiyaz.com)</span>
                     </v-tooltip>
                 </template>
                 <v-card subtitle="Account" width="250">
