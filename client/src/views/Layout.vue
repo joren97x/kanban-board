@@ -1,9 +1,19 @@
 <script setup>
 
     import {ref, mergeProps} from 'vue'
+    import {useBoardStore} from '../stores/boardStore.js'
+    import { useTheme } from 'vuetify'
 
+    const theme = useTheme()
+
+    function toggleTheme () {
+        theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+    }
+    const boardStore = useBoardStore()
     const star = ref(false)
     const drawer = ref(false)
+
+    const colors = ['red', 'green', 'yellow', 'blue']
 
 </script>
 
@@ -24,7 +34,7 @@
                         <template v-slot:activator="{ props: tooltip }">
                             <v-btn rounded v-bind="mergeProps(menu, tooltip)">
                                 <v-avatar>
-                                    <v-img src="https://pbs.twimg.com/profile_images/1642568071046119428/xtyyRarT_400x400.jpg"></v-img>
+                                    <v-img cover src="https://images.squarespace-cdn.com/content/v1/63d746c10e41a71f9fdee43c/5f518be7-ab8f-47fc-bd19-c5bb3212f7b0/Brent-Faiyaz.jpg"></v-img>
                                 </v-avatar>
                             </v-btn>
                         </template>
@@ -34,7 +44,7 @@
                 <v-card subtitle="Account" width="250">
                     <v-list>
                         <v-list-item 
-                        prepend-avatar="https://pbs.twimg.com/profile_images/1642568071046119428/xtyyRarT_400x400.jpg"
+                        prepend-avatar="https://images.squarespace-cdn.com/content/v1/63d746c10e41a71f9fdee43c/5f518be7-ab8f-47fc-bd19-c5bb3212f7b0/Brent-Faiyaz.jpg"
                         title="Joren"
                         subtitle="my@email.com"
                         value="profile"
@@ -44,7 +54,7 @@
                         <v-list-item value="theme">
                             Dark mode
                             <template v-slot:append>
-                                <v-switch inset></v-switch>
+                                <v-switch inset @click="toggleTheme"></v-switch>
                             </template>
                         </v-list-item>
                         <v-list-item value="logout">Logout</v-list-item>
@@ -54,7 +64,7 @@
         </v-app-bar>
 
         <v-navigation-drawer v-model="drawer">
-            <v-list-item prepend-avatar="https://pbs.twimg.com/profile_images/1642568071046119428/xtyyRarT_400x400.jpg">
+            <v-list-item prepend-avatar="https://images.squarespace-cdn.com/content/v1/63d746c10e41a71f9fdee43c/5f518be7-ab8f-47fc-bd19-c5bb3212f7b0/Brent-Faiyaz.jpg">
                 Brent Faiyaz's workspace
             </v-list-item>
             <v-divider/>
@@ -64,19 +74,20 @@
                     <template v-slot:append>
                         <v-tooltip text="Create new board." location="top">
                             <template v-slot:activator="{ props }">
-                                <v-btn icon="mdi-plus" variant="text" v-bind="props"></v-btn>
+                                <v-btn icon="mdi-plus" @click="boardStore.showNewBoardDialog" variant="text" v-bind="props"></v-btn>
                             </template>
                         </v-tooltip>
                     </template>
                 </v-list-item>
                 <v-list-item v-for="n in 4" :key="n" :value="n">
                     <template v-slot:prepend>
-                        <v-sheet color="red" height="25" width="25" class="me-4"></v-sheet>
+                        <v-sheet :color="colors[n-1]" height="25" width="25" class="me-4"></v-sheet>
                     </template>
                     <template v-slot:append v-if="star && n == 1">
                         <v-icon>mdi-star</v-icon>
                     </template>
-                    Board {{ n }}
+
+                    {{ n == 1 ? 'some random ahh board title' : 'board ' + n }}
                 </v-list-item>
             </v-list>
         </v-navigation-drawer>
@@ -87,7 +98,7 @@
                     <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer" v-bind="props"></v-app-bar-nav-icon>
                 </template>
             </v-tooltip>
-            <v-toolbar-title>board 1</v-toolbar-title>
+            <v-toolbar-title>some random ahh board title</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-tooltip text="Star or unstar this board.">
                 <template v-slot:activator="{ props }">

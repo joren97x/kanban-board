@@ -2,12 +2,12 @@
 
     import { ref } from "vue"
     import ListItem from './ListItem.vue'
-
+    defineProps({title: String, items: Number})
     const showNewCard = ref(false)
 
 </script>
 <template>
-    <v-card title="To do" color="grey-lighten-1">
+    <v-card :title="title" color="grey-lighten-1">
         <template v-slot:append>
             <v-btn variant="text" icon size="small">
                 <v-icon>mdi-dots-horizontal</v-icon>
@@ -23,10 +23,8 @@
                 </v-menu>
             </v-btn>
         </template>
-        <v-list class="bg-grey-lighten-1" density="compact">
-            <template v-for="n in 3" >
-                <ListItem :n="n" />
-            </template>
+        <v-list class="bg-grey-lighten-1">
+            <ListItem v-for="n in items" :key="n" />
         </v-list>
         <v-card-actions>
             <v-expand-transition>
