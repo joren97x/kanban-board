@@ -3,23 +3,34 @@
     import Layout from './Layout.vue'
     import ListCard from '@/components/ListCard.vue'
     import {useBoardStore} from '../stores/boardStore.js'
-    import {ref} from 'vue'
+    import { ref, computed } from 'vue'
+    import { VueDraggableNext } from 'vue-draggable-next'
+    
+    const dragOptions = computed(() => ({
+        animation: 0,
+        group: 'description',
+        disabled: false,
+        ghostClass: 'ghost',
+    }))
 
     const newList = ref(false)
     const boardStore = useBoardStore()
+
+    
 
 </script>
 
 <template>
     <Layout>
         <v-row class="ma-4">
-            <v-col cols="4">
-                <ListCard :title="`To do`" :items="4" />
-            </v-col>
-            <v-col cols="4">
-                <ListCard :title="`Doing`" :items="2" />
-            </v-col>
-            <v-col cols="4">
+            <VueDraggableNext :list="boardStore.boards" v-bind="dragOptions" @start="isDragging = true" @end="isDragging = false">
+                <transition-group type="transition" name="flip-list">
+                    <v-col v-for="board in boardStore.boards" :key="board.order" class="d-inline-block" cols="12" md="4" lg="4">
+                        <ListCard :items="4" :things="board" />
+                    </v-col>
+                </transition-group>
+            </VueDraggableNext>
+            <v-col  cols="12" md="4" lg="4">
                 <v-card color="grey-lighten-1">
                     <v-card-title @click="newList = true" id="newListTitle" v-if="!newList">
                         <v-icon>mdi-plus</v-icon>
@@ -93,5 +104,39 @@
 <style scoped>
     #newListTitle {
         cursor: pointer;
+    }
+    .button {
+        margin-top: 35px;
+    }
+    .flip-list-move {
+        transition: transform 0.5s;
+    }
+    .no-move {
+        transition: transform 0s;
+    }
+    .list-card {
+        display: inline-block; 
+    }
+    .ghost {
+        opacity: 0.5;
+        background: #c8ebfb;
+    }
+    .list-group {
+        min-height: 20px;
+    }
+    .list-group-item {
+        cursor: move;
+    }
+    .list-group-item i {
+        cursor: pointer;
+    }
+    .btn {
+        @apply font-bold py-2 px-4 rounded;
+    }
+    .btn-blue {
+        @apply bg-blue-500 text-white;
+    }
+    .btn-blue:hover {
+        @apply bg-blue-700;
     }
 </style>

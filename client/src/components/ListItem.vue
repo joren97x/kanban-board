@@ -3,12 +3,12 @@
     import { ref } from "vue"
     const editable = ref(false)
     const text = ref("Lorem, ipsum dolor.")
-
+    defineProps({ thing: Object })
 </script>
 
 <template>
     <v-card elevation="0" color="grey-lighten-1">
-        <v-textarea :flat="!editable" auto-grow no-resize variant="solo" :readonly="!editable" rows="1" v-model="text" :focused="editable" class="textarea mx-2">
+        <v-textarea :flat="!editable" auto-grow no-resize variant="solo" :readonly="!editable" rows="1" v-model="thing.name" :focused="editable" class="textarea mx-2">
             <template v-slot:append-inner>
                 <v-btn size="small" v-if="!editable" @click="editable = !editable" id="pencil" icon="mdi-pencil" variant="text"></v-btn>
                 <v-tooltip text="Save" v-if="editable">

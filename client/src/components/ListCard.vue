@@ -1,13 +1,27 @@
 <script setup>
 
-    import { ref } from "vue"
+    import { ref, computed, defineEmits } from "vue"
     import ListItem from './ListItem.vue'
-    defineProps({title: String, items: Number})
+    import {useBoardStore} from '../stores/boardStore.js'
+    import { VueDraggableNext } from 'vue-draggable-next'
+
     const showNewCard = ref(false)
+    const emit = defineEmits(['handleClick', 'endHandleClick'])
+    const boardStore = useBoardStore()
+    
+    const dragOptions = computed(() => ({
+        animation: 0,
+        group: 'description',
+        disabled: false,
+        ghostClass: 'ghost',
+    }))
+
+    defineProps({ things: Object })
 
 </script>
 <template>
-    <v-card :title="title" color="grey-lighten-1">
+    <v-card color="grey-lighten-1" :title="things.title" width="100%">
+        {{ things }}
         <template v-slot:append>
             <v-btn variant="text" icon size="small">
                 <v-icon>mdi-dots-horizontal</v-icon>
@@ -24,7 +38,7 @@
             </v-btn>
         </template>
         <v-list class="bg-grey-lighten-1">
-            <ListItem v-for="n in items" :key="n" />
+            <ListItem :thing="thing" v-for="thing in things.lists" :key="thing.order" />
         </v-list>
         <v-card-actions>
             <v-expand-transition>
@@ -38,4 +52,44 @@
         </v-card-actions>
     </v-card>
 </template>
+<!-- 
+<style scoped>
+    #newListTitle {
+        cursor: pointer;
+    }
+    .button {
+        margin-top: 35px;
+    }
+    .flip-list-move {
+        transition: transform 0.5s;
+    }
+    .no-move {
+        transition: transform 0s;
+    }
+    .list-card {
+        display: inline-block; 
+    }
+    .ghost {
+        opacity: 0.5;
+        background: #c8ebfb;
+    }
+    .list-group {
+        min-height: 20px;
+    }
+    .list-group-item {
+        cursor: move;
+    }
+    .list-group-item i {
+        cursor: pointer;
+    }
+    .btn {
+        @apply font-bold py-2 px-4 rounded;
+    }
+    .btn-blue {
+        @apply bg-blue-500 text-white;
+    }
+    .btn-blue:hover {
+        @apply bg-blue-700;
+    }
+</style> -->
 
