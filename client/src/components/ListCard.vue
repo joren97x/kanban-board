@@ -38,7 +38,14 @@
             </v-btn>
         </template>
         <v-list class="bg-grey-lighten-1">
-            <ListItem :thing="thing" v-for="thing in things.lists" :key="thing.order" />
+            <VueDraggableNext :list="things.lists" v-bind="dragOptions" @start="isDragging = true" @end="isDragging = false">
+                <transition-group type="transition" name="flip-list">
+                    <div v-for="thing in things.lists" :key="thing.id" >
+                        <ListItem :thing="thing" />
+                    </div>
+                </transition-group>
+            </VueDraggableNext>
+            <!-- <ListItem :thing="thing" v-for="thing in things.lists" :key="thing.order" /> -->
         </v-list>
         <v-card-actions>
             <v-expand-transition>
@@ -52,13 +59,10 @@
         </v-card-actions>
     </v-card>
 </template>
-<!-- 
+
 <style scoped>
     #newListTitle {
         cursor: pointer;
-    }
-    .button {
-        margin-top: 35px;
     }
     .flip-list-move {
         transition: transform 0.5s;
@@ -82,14 +86,5 @@
     .list-group-item i {
         cursor: pointer;
     }
-    .btn {
-        @apply font-bold py-2 px-4 rounded;
-    }
-    .btn-blue {
-        @apply bg-blue-500 text-white;
-    }
-    .btn-blue:hover {
-        @apply bg-blue-700;
-    }
-</style> -->
+</style>
 

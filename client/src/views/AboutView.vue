@@ -28,6 +28,7 @@
 <script setup>
     import { VueDraggableNext } from 'vue-draggable-next'
     import { ref, computed } from 'vue'
+    
     const message = [
         'vue.js 3.0',
         'vue.draggable',

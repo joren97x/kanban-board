@@ -7,8 +7,8 @@
 </script>
 
 <template>
-    <v-card elevation="0" color="grey-lighten-1">
-        <v-textarea :flat="!editable" auto-grow no-resize variant="solo" :readonly="!editable" rows="1" v-model="thing.name" :focused="editable" class="textarea mx-2">
+    <v-card elevation="0" color="grey-lighten-1" id="card">
+        <v-textarea :flat="!editable" auto-grow no-resize variant="solo" :readonly="!editable" rows="1" v-model="thing.name" :focused="editable" class="textarea mx-2 my-0">
             <template v-slot:append-inner>
                 <v-btn size="small" v-if="!editable" @click="editable = !editable" id="pencil" icon="mdi-pencil" variant="text"></v-btn>
                 <v-tooltip text="Save" v-if="editable">
@@ -43,6 +43,10 @@
     }
     .textarea:hover #pencil {
         opacity: 1;
+    }
+
+    #card:hover {
+        cursor: pointer;
     }
 
 </style>

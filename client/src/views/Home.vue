@@ -16,13 +16,12 @@
     const newList = ref(false)
     const boardStore = useBoardStore()
 
-    
-
 </script>
 
 <template>
     <Layout>
         <v-row class="ma-4">
+            {{ boardStore.boards }}
             <VueDraggableNext :list="boardStore.boards" v-bind="dragOptions" @start="isDragging = true" @end="isDragging = false">
                 <transition-group type="transition" name="flip-list">
                     <v-col v-for="board in boardStore.boards" :key="board.order" class="d-inline-block" cols="12" md="4" lg="4">
